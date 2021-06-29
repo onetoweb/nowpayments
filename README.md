@@ -1,4 +1,4 @@
-# Onetoweb NOWPayments Client
+# NOWPayments API Client
 
 ## Installing
 
