@@ -4,8 +4,12 @@ require 'vendor/autoload.php';
 
 use Onetoweb\NOWPayments\Client as NOWPaymentsClient;
 
+// params
 $apiKey = 'api key';
-$nowPaymentsClient = new NOWPaymentsClient($apiKey);
+$testModus = true;
+
+// init NOWPayments client
+$nowPaymentsClient = new NOWPaymentsClient($apiKey, $testModus);
 
 // get status
 $status = $nowPaymentsClient->status->get();

@@ -39,7 +39,7 @@ abstract class AbstractEndpoint implements EndpointInterface
     private function getUrl(string $endpoint = null): string
     {
         return implode('/', [
-            $this->client::API_ENDPOINT,
+            $this->client->getApiEndpoint(),
             $this->client::API_VERSION,
             $this->getResource(),
             $endpoint
