@@ -11,7 +11,7 @@ $ipnSecret = 'ipn secret';
 // requires symfony http kernel: (composer require symfony/http-kernel)
 
 $request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
-if(Authentication::authenticate($request->getContent(), $request->headers->get('http_x_nowpayments_sig'), $ipnSecret)) {
+if(Authentication::authenticate($request->getContent(), $request->headers->get('x-nowpayments-sig'), $ipnSecret)) {
     
     // webhook authenticated
     
