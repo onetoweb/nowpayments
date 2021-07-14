@@ -48,6 +48,12 @@ $payments = $nowPaymentsClient->payment->list([
     'dateTo' => '2022-01-01'
 ]);
 
+// get min amount
+$minAmount = $nowPaymentsClient->minAmount->get([
+    'currency_from' => 'btc',
+    'currency_to' => 'doge',
+]);
+
 // create invoice
 $invoice = $nowPaymentsClient->invoice->create([
     'price_amount' => 1000,

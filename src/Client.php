@@ -75,5 +75,6 @@ class Client
         $this->payment = new Endpoint\Payment($this);
         $this->estimate = new Endpoint\Estimate($this);
         $this->invoice = new Endpoint\Invoice($this);
+        $this->minAmount = new Endpoint\MinAmount($this);
     }
 }
