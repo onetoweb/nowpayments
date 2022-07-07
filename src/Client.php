@@ -16,7 +16,7 @@ class Client
      * API endpoint
      */
     const API_ENDPOINT = 'https://api.nowpayments.io';
-    const API_SANDBOX_ENDPOINT = 'https://api.sandbox.nowpayments.io';
+    const API_SANDBOX_ENDPOINT = 'https://account-sandbox.nowpayments.ioo';
     
     /**
      * API version
