@@ -23,7 +23,7 @@ class Status extends AbstractEndpoint
     /**
      * @return array
      */
-    public function info(): array
+    public function fetch(): array
     {
         return $this->get();
     }

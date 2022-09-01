@@ -18,7 +18,7 @@ class MinAmount extends AbstractEndpoint
         return self::RESOURCE;
     }
 
-    public function info(array $query): array
+    public function fetch(array $query): array
     {
         return $this->setQuery($query)->get();
     }

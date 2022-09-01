@@ -6,26 +6,26 @@ use Onetoweb\NOWPayments\Client as NOWPaymentsClient;
 
 // params
 $apiKey = 'api key';
-$testModus = true;
+$testMode = true;
 
 // init NOWPayments client
-$nowPaymentsClient = new NOWPaymentsClient($apiKey, $testModus);
+$nowPaymentsClient = new NOWPaymentsClient($apiKey, $testMode);
 
 // get status
-$status = $nowPaymentsClient->status->get();
+$status = $nowPaymentsClient->status()->fetch();
 
 // get currencies
-$currencies = $nowPaymentsClient->currency->get();
+$currencies = $nowPaymentsClient->currency()->fetch();
 
 // estimate
-$estimate = $nowPaymentsClient->estimate->get([
+$estimate = $nowPaymentsClient->estimate()->fetch([
     'amount' => 1,
     'currency_from' => 'eur',
     'currency_to' => 'doge'
 ]);
 
 // create payment
-$payment = $nowPaymentsClient->payment->create([
+$payment = $nowPaymentsClient->pay()->create([
     'price_amount' => 32,
     'price_currency' => 'eur',
     'pay_currency' => 'doge',
@@ -36,7 +36,7 @@ $payment = $nowPaymentsClient->payment->create([
 
 // get payment
 $paymentId = 42;
-$payment = $nowPaymentsClient->payment->get($paymentId);
+$payment = $nowPaymentsClient->pay()->fetch($paymentId);
 
 // list payments
 $payments = $nowPaymentsClient->payment->list([
@@ -49,13 +49,13 @@ $payments = $nowPaymentsClient->payment->list([
 ]);
 
 // get min amount
-$minAmount = $nowPaymentsClient->minAmount->get([
+$minAmount = $nowPaymentsClient->amount()->fetch([
     'currency_from' => 'btc',
     'currency_to' => 'doge',
 ]);
 
 // create invoice
-$invoice = $nowPaymentsClient->invoice->create([
+$invoice = $nowPaymentsClient->invoice()->create([
     'price_amount' => 1000,
     'price_currency' => 'eur',
     'order_id' => 'order 1',

@@ -25,7 +25,7 @@ class Estimate extends AbstractEndpoint
      *
      * @return array
      */
-    public function info(array $query): array
+    public function fetch(array $query): array
     {
         return $this->setQuery($query)->get();
     }

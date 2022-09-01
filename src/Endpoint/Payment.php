@@ -33,7 +33,7 @@ class Payment extends AbstractEndpoint
      * @param int $paymentId
      * @return array
      */
-    public function info(int $paymentId): array
+    public function fetch(int $paymentId): array
     {
         return $this->setEndpoint( $paymentId)->get();
     }
