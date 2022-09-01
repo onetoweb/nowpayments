@@ -24,6 +24,7 @@
 	"autoload" : {
 		"psr-4" : {
 			"Onetoweb\\NOWPayments\\" : "src/"
-		}
+		},
+		"files": ["src/helpers.php"]
 	}
 }
