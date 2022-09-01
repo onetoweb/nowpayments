@@ -4,14 +4,14 @@ namespace Onetoweb\NOWPayments\Endpoint;
 
 /**
  * Payment endpoint
- * 
+ *
  * @author Jonathan van 't Ende <jvantende@onetoweb.nl>
  * @copyright Onetoweb B.V.
  */
 class Payment extends AbstractEndpoint
 {
     const RESOURCE = 'payment';
-    
+
     /**
      * @return string
      */
@@ -19,29 +19,32 @@ class Payment extends AbstractEndpoint
     {
         return self::RESOURCE;
     }
-    
+
     /**
      * @param array $data
+     * @return array
      */
     public function create(array $data): array
     {
-        return $this->request(parent::METHOD_POST, null, $data);
+        return $this->setData($data)->post();
     }
-    
+
     /**
-     * @param array $payment
+     * @param int $paymentId
+     * @return array
      */
-    public function get(int $paymentId): array
+    public function info(int $paymentId): array
     {
-        return $this->request(parent::METHOD_GET, $paymentId);
+        return $this->setEndpoint( $paymentId)->get();
     }
-    
-    
+
+
     /**
      * @param array $query
+     * @return array
      */
     public function list(array $query): array
     {
-        return $this->request(parent::METHOD_GET, null, [], $query);
+        return $this->setQuery($query)->get();
     }
 }

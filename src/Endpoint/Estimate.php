@@ -19,14 +19,14 @@ class Estimate extends AbstractEndpoint
     {
         return self::RESOURCE;
     }
-    
+
     /**
      * @param array $query
-     * 
+     *
      * @return array
      */
-    public function get(array $query): array
+    public function info(array $query): array
     {
-        return $this->request(parent::METHOD_GET, null, [], $query);
+        return $this->setQuery($query)->get();
     }
 }

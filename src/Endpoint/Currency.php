@@ -23,8 +23,8 @@ class Currency extends AbstractEndpoint
     /**
      * @return array
      */
-    public function get(): array
+    public function info(): array
     {
-        return $this->request(parent::METHOD_GET);
+        return $this->get();
     }
 }

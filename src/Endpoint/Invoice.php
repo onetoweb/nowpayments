@@ -27,6 +27,6 @@ class Invoice extends AbstractEndpoint
      */
     public function create(array $data): array
     {
-        return $this->request(parent::METHOD_POST, null, $data);
+        return $this->setData($data)->post();
     }
 }

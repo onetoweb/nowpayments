@@ -6,85 +6,101 @@ use Onetoweb\NOWPayments\Client;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Abstract Endpoint.
- * 
+ *
  * @author Jonathan van 't Ende <jvantende@onetoweb.nl>
  * @copyright Onetoweb B.V.
  */
 abstract class AbstractEndpoint implements EndpointInterface
 {
-    const METHOD_GET = 'GET';
-    const METHOD_POST = 'POST';
-    
-    /**
-     * @var Client
-     */
-    protected $client;
-    
-    /**
-     * @param Client $client
-     */
-    public function __construct(Client $client)
+
+    protected ?string $endpoint = null;
+
+    protected array $options = [], $query = [], $data = [];
+
+    public function __construct(
+        protected Client       $client,
+        protected GuzzleClient $http = new GuzzleClient()
+    )
     {
-        $this->client = $client;
     }
-    
+
     /**
-     * @param string $endpoint = null
-     * 
-     * @return string
+     * @param array $query
+     * @return AbstractEndpoint
      */
-    private function getUrl(string $endpoint = null): string
+    public function setQuery(array $query): AbstractEndpoint
+    {
+        $this->query = $query;
+        return $this;
+    }
+
+    /**
+     * @param string|null $endpoint
+     * @return AbstractEndpoint
+     */
+    public function setEndpoint(?string $endpoint): AbstractEndpoint
+    {
+        $this->endpoint = $endpoint;
+        return $this;
+    }
+
+    /**
+     * @param array $data
+     * @return AbstractEndpoint
+     */
+    public function setData(array $data): AbstractEndpoint
+    {
+        $this->data = $data;
+        return $this;
+    }
+
+    private function getUrl(): string
     {
         return implode('/', [
             $this->client->getApiEndpoint(),
             $this->client::API_VERSION,
             $this->getResource(),
-            $endpoint
+            $this->endpoint
         ]);
     }
-    
+
     /**
-     * @param string $method = 'GET'
-     * @param string $endpoint = null
-     * @param array $data = []
-     * @param array $query = []
-     * 
+     * @param callable $response
      * @return array
      */
-    protected function request(string $method = self::METHOD_GET, string $endpoint = null, array $data = [], array $query = []): array
+    protected function request(callable $response): array
     {
-        $options = [
+        $this->prepareOptions();
+        return json_decode($response()->getBody()->getContents(), true);
+
+    }
+
+    protected function prepareOptions()
+    {
+        $this->options += [
             RequestOptions::HEADERS => [
                 'x-api-key' => $this->client->getApiKey()
             ],
-            RequestOptions::QUERY => $query
+            RequestOptions::QUERY => $this->query
         ];
-        
-        if ($method == self::METHOD_POST) {
-            $options[RequestOptions::JSON] = $data;
-        }
-        
-        try {
-            
-            $guzzleClient = new GuzzleClient();
-            $response  = $guzzleClient->request($method, $this->getUrl($endpoint), $options);
-            
-            return json_decode($response->getBody()->getContents(), true);
-            
-        } catch (RequestException $requestException) {
-            
-            if ($requestException->hasResponse()) {
-                
-                return json_decode($requestException->getResponse()->getBody()->getContents(), true);
-                
-            }
-            
-            return [
-                'message' => 'no response'
-            ];
-        }
+
+
     }
+
+    protected function post(): array
+    {
+        $this->options[RequestOptions::JSON] = $this->data;
+        return $this->request(fn(): ResponseInterface => $this->http->post($this->getUrl(), $this->options));
+    }
+
+
+    protected function get(): array
+    {
+        return $this->request(fn(): ResponseInterface => $this->http->get($this->getUrl(), $this->options));
+    }
+
 }
