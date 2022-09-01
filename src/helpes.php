@@ -1,7 +1,10 @@
 <?php
+
+use Onetoweb\NOWPayments\Client;
+
 if (!function_exists('newPay')) {
-    function newPay(string $apiKey = null): \Onetoweb\NOWPayments\Client
+    function newPay(string $apiKey = null): Client
     {
-        return new \Onetoweb\NOWPayments\Client($apiKey ?? getenv('NEW_PAY_API_KEY'));
+        return new Client($apiKey ?? getenv('NEW_PAY_API_KEY'));
     }
 }
