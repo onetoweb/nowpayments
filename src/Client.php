@@ -22,7 +22,7 @@ class Client
      * API endpoint
      */
     const API_ENDPOINT = 'https://api.nowpayments.io';
-    const API_SANDBOX_ENDPOINT = 'https://api.nowpayments.io';
+    const API_SANDBOX_ENDPOINT = 'https://api-sandbox.nowpayments.io';
     const API_VERSION = 'v1';
 
     public function __construct(protected string $apiKey, protected bool $testMode = false)
