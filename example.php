@@ -9,11 +9,10 @@ $apiKey = 'api key';
 $testMode = true;
 
 // init NOWPayments client
-$nowPaymentsClient = new NOWPaymentsClient($apiKey, $testMode);
+$nowPaymentsClient = newPay();
 
 // get status
 $status = $nowPaymentsClient->status()->fetch();
-
 // get currencies
 $currencies = $nowPaymentsClient->currency()->fetch();
 
