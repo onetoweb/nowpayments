@@ -9,7 +9,7 @@ $apiKey = 'api key';
 $testMode = true;
 
 // init NOWPayments client
-$nowPaymentsClient = newPay($apiKey,$testMode);
+$nowPaymentsClient = nowPay($apiKey,$testMode);
 
 // get status
 $status = $nowPaymentsClient->status()->fetch();
