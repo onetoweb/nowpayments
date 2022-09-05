@@ -10,13 +10,6 @@ namespace Onetoweb\NOWPayments;
  */
 class Authentication
 {
-    /**
-     * @param string $content
-     * @param string $receivedHmac
-     * @param string $ipnSecret
-     * 
-     * @return bool
-     */
     public static function authenticated(?string $ipnSecret = null): bool|array
     {
         $ipnSecret ??= getenv('NOW_PAYMENT_SECRET');
