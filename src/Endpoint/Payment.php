@@ -2,6 +2,8 @@
 
 namespace Onetoweb\NOWPayments\Endpoint;
 
+use Onetoweb\NOWPayments\Responses\PaymentResponse;
+
 /**
  * Payment endpoint
  *
@@ -22,11 +24,11 @@ class Payment extends AbstractEndpoint
 
     /**
      * @param array $data
-     * @return array
+     * @return PaymentResponse
      */
-    public function create(array $data): array
+    public function create(array $data): PaymentResponse
     {
-        return $this->setData($data)->post();
+        return PaymentResponse::collect($this->setData($data)->post());
     }
 
     /**
