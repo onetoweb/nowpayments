@@ -2,15 +2,17 @@
 
 namespace Onetoweb\NOWPayments;
 
+use Onetoweb\NOWPayments\Responses\DataResponse;
+
 /**
  * Authentication.
- * 
+ *
  * @author Jonathan van 't Ende <jvantende@onetoweb.nl>
  * @copyright Onetoweb B.V.
  */
 class Authentication
 {
-    public static function authenticated(?string $ipnSecret = null): bool|array
+    public static function authenticated(?string $ipnSecret = null): bool|DataResponse
     {
         $ipnSecret ??= getenv('NOW_PAYMENT_SECRET');
 
@@ -32,7 +34,7 @@ class Authentication
         if ($hmac != $receivedHmac)
             throw new \InvalidArgumentException('HMAC is not valid !');
 
-        return $requestData;
+        return new DataResponse($requestData);
     }
 
 }
