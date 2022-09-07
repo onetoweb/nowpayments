@@ -39,7 +39,7 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function status(string $status): \Onetoweb\NOWPayments\Responses\StatusResponse
 {
-    // ..
+    return new \Onetoweb\NOWPayments\Responses\StatusResponse($status);
 }
