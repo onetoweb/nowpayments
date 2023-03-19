@@ -1,5 +1,5 @@
 {
-	"name" : "onetoweb/nowpayments",
+	"name" : "rivervanrain/nowpayments",
 	"description" : "NOWPayments API Client",
 	"keywords" : [
 		"api",
@@ -15,7 +15,7 @@
 		}
 	],
 	"require" : {
-		"php" : ">=7.1.0",
+		"php" : "^7.3",
 		"guzzlehttp/guzzle": "^7.3"
 	},
 	"require-dev" : {
