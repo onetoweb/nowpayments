@@ -3,7 +3,7 @@
 ## Installing
 
 ```bash
-composer require onetoweb/nowpayments
+composer require mkhab7/nowpayments
 ```
 
 ## Usage
