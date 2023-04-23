@@ -1,4 +1,19 @@
 <?php
+ /**
+  * This repository is forked from original repository by Onetoweb B.V.
+  * @see https://github.com/onetoweb/nowpayments
+  *
+  * Add some error fix 
+    FIX for support PHP 8.2 
+
+    Deprecated: Creation of dynamic property Onetoweb\NOWPayments\Client::$status is deprecated
+    Deprecated: Creation of dynamic property Onetoweb\NOWPayments\Client::$currency is deprecated
+    Deprecated: Creation of dynamic property Onetoweb\NOWPayments\Client::$payment is deprecated
+    Deprecated: Creation of dynamic property Onetoweb\NOWPayments\Client::$estimate is deprecated 
+    Deprecated: Creation of dynamic property Onetoweb\NOWPayments\Client::$invoice is deprecated
+    Deprecated: Creation of dynamic property Onetoweb\NOWPayments\Client::$minAmount is deprecated
+  * @see https://github.com/ay4t/nowpayments
+  */
 
 namespace Onetoweb\NOWPayments;
 
@@ -15,8 +30,8 @@ class Client
     /**
      * API endpoint
      */
-    const API_ENDPOINT = 'https://api.nowpayments.io';
-    const API_SANDBOX_ENDPOINT = 'https://api.sandbox.nowpayments.io';
+    const API_ENDPOINT          = 'https://api.nowpayments.io';
+    const API_SANDBOX_ENDPOINT  = 'https://api-sandbox.nowpayments.io';
     
     /**
      * API version
@@ -32,7 +47,44 @@ class Client
      * @var bool
      */
     private $testModus;
+
+    /**
+     * @var Endpoint\Status
+     * @author Ayatulloh Ahad R <ayatulloh@indiega.net>
+     */
+    public $status;
+
+    /**
+     * @var Endpoint\Currency
+     * @author Ayatulloh Ahad R <ayatulloh@indiega.net>
+     */
+    public $currency;
+
+    /**
+     * @var Endpoint\Payment
+     * @author Ayatulloh Ahad R <ayatulloh@indiega.net>
+     */
+    public $payment;
     
+    /**
+     * @var Endpoint\Estimate
+     * @author Ayatulloh Ahad R <ayatulloh@indiega.net>
+     */
+    public $estimate;
+
+    /**
+     * @var Endpoint\Invoice
+     * @author Ayatulloh Ahad R <ayatulloh@indiega.net>
+     */
+    public $invoice;
+
+    /**
+     * @var Endpoint\MinAmount
+     * @author Ayatulloh Ahad R <ayatulloh@indiega.net>
+     */
+    public $minAmount;
+
+
     /**
      * @param string $apiKey
      * @param bool $testModus = false
@@ -70,11 +122,11 @@ class Client
      */
     private function initializeEndpoints()
     {
-        $this->status = new Endpoint\Status($this);
-        $this->currency = new Endpoint\Currency($this);
-        $this->payment = new Endpoint\Payment($this);
-        $this->estimate = new Endpoint\Estimate($this);
-        $this->invoice = new Endpoint\Invoice($this);
-        $this->minAmount = new Endpoint\MinAmount($this);
+        $this->status       = new Endpoint\Status($this);
+        $this->currency     = new Endpoint\Currency($this);
+        $this->payment      = new Endpoint\Payment($this);
+        $this->estimate     = new Endpoint\Estimate($this);
+        $this->invoice      = new Endpoint\Invoice($this);
+        $this->minAmount    = new Endpoint\MinAmount($this);
     }
 }
