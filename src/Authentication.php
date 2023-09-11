@@ -2,40 +2,39 @@
 
 namespace Onetoweb\NOWPayments;
 
+use Onetoweb\NOWPayments\Responses\DataResponse;
+
 /**
  * Authentication.
- * 
+ *
  * @author Jonathan van 't Ende <jvantende@onetoweb.nl>
  * @copyright Onetoweb B.V.
  */
 class Authentication
 {
-    /**
-     * @param string $content
-     * @param string $receivedHmac
-     * @param string $ipnSecret
-     * 
-     * @return bool
-     */
-    public static function authenticate(string $content, string $receivedHmac, string $ipnSecret): bool
+    public static function authenticated(?string $ipnSecret = null): bool|DataResponse
     {
-        if (!empty($content) and !empty($receivedHmac) and !empty($ipnSecret)) {
-            
-            $data = json_decode($content, true);
-            ksort($data);
-            $json = json_encode($data);
-            
-            if ($json !== false and !empty($json)) {
-                
-                $hmac = hash_hmac('sha512', $json, $ipnSecret);
-                
-                if ($receivedHmac == $hmac) {
-                    return true;
-                }
-                
-            }
-        }
-        
-        return false;
+        $ipnSecret ??= getenv('NOW_PAYMENT_SECRET');
+
+        if (empty($ipnSecret))
+            throw new \InvalidArgumentException('IPN secret does not exists. please set an IPN !');
+
+        if (empty($receivedHmac = $_SERVER['HTTP_X_NOWPAYMENTS_SIG'] ?? ''))
+            throw new \InvalidArgumentException('Can not find "HTTP_X_NOWPAYMENTS_SIG" in $_SERVER');
+
+        if (empty($requestJson = file_get_contents('php://input')))
+            throw new \InvalidArgumentException('The request body is empty !');
+
+
+        $requestData = json_decode($requestJson, true);
+        ksort($requestData);
+        $sorted_request_json = json_encode($requestData, JSON_UNESCAPED_SLASHES);
+        $hmac = hash_hmac('sha512', $sorted_request_json, trim($ipnSecret));
+
+        if ($hmac != $receivedHmac)
+            throw new \InvalidArgumentException('HMAC is not valid !');
+
+        return new DataResponse($requestData);
     }
+
 }

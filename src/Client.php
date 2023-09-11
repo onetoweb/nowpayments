@@ -3,10 +3,16 @@
 namespace Onetoweb\NOWPayments;
 
 use Onetoweb\NOWPayments\Endpoint;
+use Onetoweb\NOWPayments\Endpoint\Currency;
+use Onetoweb\NOWPayments\Endpoint\Estimate;
+use Onetoweb\NOWPayments\Endpoint\Invoice;
+use Onetoweb\NOWPayments\Endpoint\MinAmount;
+use Onetoweb\NOWPayments\Endpoint\Payment;
+use Onetoweb\NOWPayments\Endpoint\Status;
 
 /**
  * Client.
- * 
+ *
  * @author Jonathan van 't Ende <jvantende@onetoweb.nl>
  * @copyright Onetoweb B.V.
  */
@@ -16,35 +22,14 @@ class Client
      * API endpoint
      */
     const API_ENDPOINT = 'https://api.nowpayments.io';
-    const API_SANDBOX_ENDPOINT = 'https://api.sandbox.nowpayments.io';
-    
-    /**
-     * API version
-     */
+    const API_SANDBOX_ENDPOINT = 'https://api-sandbox.nowpayments.io';
     const API_VERSION = 'v1';
-    
-    /**
-     * @var string
-     */
-    private $apiKey;
-    
-    /**
-     * @var bool
-     */
-    private $testModus;
-    
-    /**
-     * @param string $apiKey
-     * @param bool $testModus = false
-     */
-    public function __construct(string $apiKey, bool $testModus = false)
+
+    public function __construct(protected string $apiKey, protected bool $testMode = false)
     {
-        $this->apiKey = $apiKey;
-        $this->testModus = $testModus;
-        
-        $this->initializeEndpoints();
+
     }
-    
+
     /**
      * @return string
      */
@@ -52,29 +37,47 @@ class Client
     {
         return $this->apiKey;
     }
-    
+
     /**
      * @return string
      */
     public function getApiEndpoint(): string
     {
-        if ($this->testModus) {
+        if ($this->testMode) {
             return self::API_SANDBOX_ENDPOINT;
         }
-        
+
         return self::API_ENDPOINT;
     }
-    
-    /**
-     * Initialize endpoints.
-     */
-    private function initializeEndpoints()
+
+    public function status(): Status
     {
-        $this->status = new Endpoint\Status($this);
-        $this->currency = new Endpoint\Currency($this);
-        $this->payment = new Endpoint\Payment($this);
-        $this->estimate = new Endpoint\Estimate($this);
-        $this->invoice = new Endpoint\Invoice($this);
-        $this->minAmount = new Endpoint\MinAmount($this);
+        return new Status($this);
     }
+
+    public function amount(): MinAmount
+    {
+        return new MinAmount($this);
+    }
+
+    public function currency(): Currency
+    {
+        return new Currency($this);
+    }
+
+    public function estimate(): Estimate
+    {
+        return new Estimate($this);
+    }
+
+    public function invoice(): Invoice
+    {
+        return new Invoice($this);
+    }
+
+    public function pay(): Payment
+    {
+        return new Payment($this);
+    }
+
 }
