@@ -1,21 +1,17 @@
 {
 	"name" : "rivervanrain/nowpayments",
 	"description" : "NOWPayments API Client",
-	"keywords" : [
-		"api",
-		"php",
-		"nowpayments"
-	],
+	"keywords" : ["nowpayments"],
 	"type" : "library",
-	"homepage" : "https://github.com/onetoweb/nowpayments",
+	"homepage" : "https://github.com/rivervanrain/nowpayments",
 	"license" : "MIT",
 	"authors" : [{
-			"name" : "Jonathan van 't Ende",
-			"email" : "jvantende@onetoweb.nl"
+			"name" : "Nikolai Shcherbin",
+			"email" : "support@wzm.me"
 		}
 	],
 	"require" : {
-		"php" : "^7.3",
+		"php" : "^8.2",
 		"guzzlehttp/guzzle": "^7.3"
 	},
 	"require-dev" : {
@@ -23,7 +19,7 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"Onetoweb\\NOWPayments\\" : "src/"
+			"NP\\" : "src/"
 		}
 	}
 }

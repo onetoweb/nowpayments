@@ -1,12 +1,12 @@
 <?php
 
-namespace Onetoweb\NOWPayments\Endpoint;
+namespace NP\Endpoint;
 
 /**
  * Endpoint interface.
  * 
- * @author Jonathan van 't Ende <jvantende@onetoweb.nl>
- * @copyright Onetoweb B.V.
+ * @author Nikolai Shcherbin <support@wzm.me>
+ * @copyright Nikolai Shcherbin
  */
 interface EndpointInterface
 {

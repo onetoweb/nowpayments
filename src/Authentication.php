@@ -1,12 +1,12 @@
 <?php
 
-namespace Onetoweb\NOWPayments;
+namespace NP;
 
 /**
  * Authentication.
  * 
- * @author Jonathan van 't Ende <jvantende@onetoweb.nl>
- * @copyright Onetoweb B.V.
+ * @author Nikolai Shcherbin <support@wzm.me>
+ * @copyright Nikolai Shcherbin
  */
 class Authentication
 {
@@ -19,13 +19,13 @@ class Authentication
      */
     public static function authenticate(string $content, string $receivedHmac, string $ipnSecret): bool
     {
-        if (!empty($content) and !empty($receivedHmac) and !empty($ipnSecret)) {
+        if (!empty($content) && !empty($receivedHmac) && !empty($ipnSecret)) {
             
             $data = json_decode($content, true);
             ksort($data);
             $json = json_encode($data);
             
-            if ($json !== false and !empty($json)) {
+            if ($json !== false && !empty($json)) {
                 
                 $hmac = hash_hmac('sha512', $json, $ipnSecret);
                 

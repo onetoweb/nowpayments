@@ -1,8 +1,8 @@
 <?php
 
-namespace Onetoweb\NOWPayments\Endpoint;
+namespace NP\Endpoint;
 
-use Onetoweb\NOWPayments\Client;
+use NP\Client;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Exception\RequestException;
@@ -10,13 +10,15 @@ use GuzzleHttp\Exception\RequestException;
 /**
  * Abstract Endpoint.
  * 
- * @author Jonathan van 't Ende <jvantende@onetoweb.nl>
- * @copyright Onetoweb B.V.
+ * @author Nikolai Shcherbin <support@wzm.me>
+ * @copyright Nikolai Shcherbin
  */
 abstract class AbstractEndpoint implements EndpointInterface
 {
     const METHOD_GET = 'GET';
     const METHOD_POST = 'POST';
+	const METHOD_PATCH = 'PATCH';
+	const METHOD_DELETE = 'DELETE';
     
     /**
      * @var Client
@@ -56,30 +58,36 @@ abstract class AbstractEndpoint implements EndpointInterface
      */
     protected function request(string $method = self::METHOD_GET, string $endpoint = null, array $data = [], array $query = []): array
     {
-        $options = [
-            RequestOptions::HEADERS => [
-                'x-api-key' => $this->client->getApiKey()
-            ],
-            RequestOptions::QUERY => $query
-        ];
+        if (!is_null($this->client->getJwt())) {
+			$options = [
+				RequestOptions::HEADERS => [
+					'x-api-key' => $this->client->getApiKey(),
+					'Authorization' => 'Bearer ' . $this->client->getJwt(),
+				],
+				RequestOptions::QUERY => $query
+			];
+		} else {
+			$options = [
+				RequestOptions::HEADERS => [
+					'x-api-key' => $this->client->getApiKey()
+				],
+				RequestOptions::QUERY => $query
+			];
+		}
         
-        if ($method == self::METHOD_POST) {
+        if ($method == self::METHOD_POST || $method == self::METHOD_PATCH) {
             $options[RequestOptions::JSON] = $data;
         }
         
         try {
-            
             $guzzleClient = new GuzzleClient();
             $response  = $guzzleClient->request($method, $this->getUrl($endpoint), $options);
             
             return json_decode($response->getBody()->getContents(), true);
             
         } catch (RequestException $requestException) {
-            
             if ($requestException->hasResponse()) {
-                
                 return json_decode($requestException->getResponse()->getBody()->getContents(), true);
-                
             }
             
             return [

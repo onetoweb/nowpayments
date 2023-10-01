@@ -1,14 +1,14 @@
 <?php
 
-namespace Onetoweb\NOWPayments;
+namespace NP;
 
-use Onetoweb\NOWPayments\Endpoint;
+use NP\Endpoint;
 
 /**
  * Client.
  * 
- * @author Jonathan van 't Ende <jvantende@onetoweb.nl>
- * @copyright Onetoweb B.V.
+ * @author Nikolai Shcherbin <support@wzm.me>
+ * @copyright Nikolai Shcherbin
  */
 class Client
 {
@@ -32,15 +32,22 @@ class Client
      * @var bool
      */
     private $testModus;
+	
+	 /**
+     * @var string
+     */
+    private $jwt;
     
     /**
      * @param string $apiKey
      * @param bool $testModus = false
+	 * @param string $jwt = null
      */
-    public function __construct(string $apiKey, bool $testModus = false)
+    public function __construct(string $apiKey, bool $testModus = false, $jwt = null)
     {
         $this->apiKey = $apiKey;
         $this->testModus = $testModus;
+		$this->jwt = $jwt;
         
         $this->initializeEndpoints();
     }
@@ -64,17 +71,27 @@ class Client
         
         return self::API_ENDPOINT;
     }
+	
+	/**
+     * @return string
+     */
+    public function getJwt()
+    {
+        return $this->jwt;
+    }
     
     /**
      * Initialize endpoints.
      */
     private function initializeEndpoints()
     {
-        $this->status = new Endpoint\Status($this);
+        $this->auth = new Endpoint\Auth($this);
+		$this->status = new Endpoint\Status($this);
         $this->currency = new Endpoint\Currency($this);
         $this->payment = new Endpoint\Payment($this);
         $this->estimate = new Endpoint\Estimate($this);
         $this->invoice = new Endpoint\Invoice($this);
         $this->minAmount = new Endpoint\MinAmount($this);
+		$this->subscriptions = new Endpoint\Subscriptions($this);
     }
 }
