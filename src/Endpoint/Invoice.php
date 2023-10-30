@@ -1,12 +1,12 @@
 <?php
 
-namespace Onetoweb\NOWPayments\Endpoint;
+namespace NP\Endpoint;
 
 /**
  * Invoice endpoint
  * 
- * @author Jonathan van 't Ende <jvantende@onetoweb.nl>
- * @copyright Onetoweb B.V.
+ * @author Nikolai Shcherbin <support@wzm.me>
+ * @copyright Nikolai Shcherbin
  */
 class Invoice extends AbstractEndpoint
 {

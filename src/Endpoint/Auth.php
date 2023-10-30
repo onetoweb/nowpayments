@@ -3,14 +3,14 @@
 namespace NP\Endpoint;
 
 /**
- * Status endpoint.
+ * Authentication endpoint.
  * 
  * @author Nikolai Shcherbin <support@wzm.me>
  * @copyright Nikolai Shcherbin
  */
-class Status extends AbstractEndpoint
+class Auth extends AbstractEndpoint
 {
-    const RESOURCE = 'status';
+    const RESOURCE = 'auth';
     
     /**
      * @return string
@@ -23,8 +23,8 @@ class Status extends AbstractEndpoint
     /**
      * @return array
      */
-    public function get(): array
+    public function token(array $data): array
     {
-        return $this->request(parent::METHOD_GET);
+        return $this->request(parent::METHOD_POST, null, $data);
     }
 }

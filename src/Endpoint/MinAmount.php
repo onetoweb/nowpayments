@@ -1,12 +1,12 @@
 <?php
 
-namespace Onetoweb\NOWPayments\Endpoint;
+namespace NP\Endpoint;
 
 /**
  * Min amount endpoint
  * 
- * @author Jonathan van 't Ende <jvantende@onetoweb.nl>
- * @copyright Onetoweb B.V.
+ * @author Nikolai Shcherbin <support@wzm.me>
+ * @copyright Nikolai Shcherbin
  */
 class MinAmount extends AbstractEndpoint
 {

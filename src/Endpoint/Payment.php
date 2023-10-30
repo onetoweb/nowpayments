@@ -1,12 +1,12 @@
 <?php
 
-namespace Onetoweb\NOWPayments\Endpoint;
+namespace NP\Endpoint;
 
 /**
  * Payment endpoint
  * 
- * @author Jonathan van 't Ende <jvantende@onetoweb.nl>
- * @copyright Onetoweb B.V.
+ * @author Nikolai Shcherbin <support@wzm.me>
+ * @copyright Nikolai Shcherbin
  */
 class Payment extends AbstractEndpoint
 {
@@ -42,6 +42,6 @@ class Payment extends AbstractEndpoint
      */
     public function list(array $query): array
     {
-        return $this->request(parent::METHOD_GET, null, [], $query);
+        return $this->request(parent::METHOD_GET, null, $query);
     }
 }
