@@ -2,6 +2,8 @@
 
 namespace Onetoweb\NOWPayments\Endpoint;
 
+use Onetoweb\NOWPayments\Config\Method;
+
 /**
  * Estimate endpoint
  * 
@@ -27,6 +29,6 @@ class Estimate extends AbstractEndpoint
      */
     public function get(array $query): array
     {
-        return $this->request(parent::METHOD_GET, null, [], $query);
+        return $this->request(Method::GET, null, [], $query);
     }
 }

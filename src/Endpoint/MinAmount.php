@@ -2,6 +2,8 @@
 
 namespace Onetoweb\NOWPayments\Endpoint;
 
+use Onetoweb\NOWPayments\Config\Method;
+
 /**
  * Min amount endpoint
  * 
@@ -25,6 +27,6 @@ class MinAmount extends AbstractEndpoint
      */
     public function get(array $query): array
     {
-        return $this->request(parent::METHOD_GET, null, [], $query);
+        return $this->request(Method::GET, null, [], $query);
     }
 }

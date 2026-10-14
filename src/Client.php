@@ -15,33 +15,24 @@ class Client
     /**
      * API endpoint
      */
-    const API_ENDPOINT = 'https://api.nowpayments.io';
-    const API_SANDBOX_ENDPOINT = 'https://api.sandbox.nowpayments.io';
+    public const API_ENDPOINT = 'https://api.nowpayments.io';
+    public const API_SANDBOX_ENDPOINT = 'https://api.sandbox.nowpayments.io';
     
     /**
      * API version
      */
-    const API_VERSION = 'v1';
-    
-    /**
-     * @var string
-     */
-    private $apiKey;
-    
-    /**
-     * @var bool
-     */
-    private $testModus;
+    public const API_VERSION = 'v1';
     
     /**
      * @param string $apiKey
      * @param bool $testModus = false
      */
-    public function __construct(string $apiKey, bool $testModus = false)
-    {
-        $this->apiKey = $apiKey;
-        $this->testModus = $testModus;
+    public function __construct(
         
+        #[\SensitiveParameter]
+        private string $apiKey,
+        private bool $testModus = false
+    ) {
         $this->initializeEndpoints();
     }
     

@@ -2,6 +2,8 @@
 
 namespace Onetoweb\NOWPayments\Endpoint;
 
+use Onetoweb\NOWPayments\Config\Method;
+
 /**
  * Status endpoint.
  * 
@@ -25,6 +27,6 @@ class Status extends AbstractEndpoint
      */
     public function get(): array
     {
-        return $this->request(parent::METHOD_GET);
+        return $this->request(Method::GET);
     }
 }

@@ -6,6 +6,7 @@ use Onetoweb\NOWPayments\Client;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Exception\RequestException;
+use Onetoweb\NOWPayments\Config\Method;
 
 /**
  * Abstract Endpoint.
@@ -15,28 +16,21 @@ use GuzzleHttp\Exception\RequestException;
  */
 abstract class AbstractEndpoint implements EndpointInterface
 {
-    const METHOD_GET = 'GET';
-    const METHOD_POST = 'POST';
-    
-    /**
-     * @var Client
-     */
-    protected $client;
-    
     /**
      * @param Client $client
      */
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
+    public function __construct(
+        protected Client $client
+    ) {
+        
     }
     
     /**
-     * @param string $endpoint = null
+     * @param ?string $endpoint = null
      * 
      * @return string
      */
-    private function getUrl(string $endpoint = null): string
+    private function getUrl(?string $endpoint = null): string
     {
         return implode('/', [
             $this->client->getApiEndpoint(),
@@ -47,14 +41,14 @@ abstract class AbstractEndpoint implements EndpointInterface
     }
     
     /**
-     * @param string $method = 'GET'
-     * @param string $endpoint = null
+     * @param Method $method = Method::GET
+     * @param ?string $endpoint = null
      * @param array $data = []
      * @param array $query = []
      * 
      * @return array
      */
-    protected function request(string $method = self::METHOD_GET, string $endpoint = null, array $data = [], array $query = []): array
+    protected function request(Method $method = Method::GET, ?string $endpoint = null, array $data = [], array $query = []): array
     {
         $options = [
             RequestOptions::HEADERS => [
@@ -63,14 +57,14 @@ abstract class AbstractEndpoint implements EndpointInterface
             RequestOptions::QUERY => $query
         ];
         
-        if ($method == self::METHOD_POST) {
+        if ($method == Method::POST) {
             $options[RequestOptions::JSON] = $data;
         }
         
         try {
             
             $guzzleClient = new GuzzleClient();
-            $response  = $guzzleClient->request($method, $this->getUrl($endpoint), $options);
+            $response  = $guzzleClient->request($method->value, $this->getUrl($endpoint), $options);
             
             return json_decode($response->getBody()->getContents(), true);
             

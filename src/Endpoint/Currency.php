@@ -2,6 +2,8 @@
 
 namespace Onetoweb\NOWPayments\Endpoint;
 
+use Onetoweb\NOWPayments\Config\Method;
+
 /**
  * Currency endpoint.
  * 
@@ -25,6 +27,6 @@ class Currency extends AbstractEndpoint
      */
     public function get(): array
     {
-        return $this->request(parent::METHOD_GET);
+        return $this->request(Method::GET);
     }
 }

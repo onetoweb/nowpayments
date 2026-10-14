@@ -8,9 +8,12 @@ composer require onetoweb/nowpayments
 
 ## Usage
 
-See example.php
-
+See [example.php](example.php)
 
 ## Example webhook authentication
 
-See webhook.php
+See [webhook.php](webhook.php)
+
+## Change Log
+
+See [Change Log](CHANGELOG.md)

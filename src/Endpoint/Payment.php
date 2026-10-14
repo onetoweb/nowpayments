@@ -2,6 +2,8 @@
 
 namespace Onetoweb\NOWPayments\Endpoint;
 
+use Onetoweb\NOWPayments\Config\Method;
+
 /**
  * Payment endpoint
  * 
@@ -25,7 +27,7 @@ class Payment extends AbstractEndpoint
      */
     public function create(array $data): array
     {
-        return $this->request(parent::METHOD_POST, null, $data);
+        return $this->request(Method::POST, null, $data);
     }
     
     /**
@@ -33,7 +35,7 @@ class Payment extends AbstractEndpoint
      */
     public function get(int $paymentId): array
     {
-        return $this->request(parent::METHOD_GET, $paymentId);
+        return $this->request(Method::GET, $paymentId);
     }
     
     
@@ -42,6 +44,6 @@ class Payment extends AbstractEndpoint
      */
     public function list(array $query): array
     {
-        return $this->request(parent::METHOD_GET, null, [], $query);
+        return $this->request(Method::GET, null, [], $query);
     }
 }

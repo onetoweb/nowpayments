@@ -2,6 +2,8 @@
 
 namespace Onetoweb\NOWPayments\Endpoint;
 
+use Onetoweb\NOWPayments\Config\Method;
+
 /**
  * Invoice endpoint
  * 
@@ -27,6 +29,6 @@ class Invoice extends AbstractEndpoint
      */
     public function create(array $data): array
     {
-        return $this->request(parent::METHOD_POST, null, $data);
+        return $this->request(Method::POST, null, $data);
     }
 }
